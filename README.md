@@ -60,7 +60,7 @@ from exception_handler import ExceptionHandler
 def print_exception(ex):
     print(ex)
 
-@ExceptionHandler(exception=ZeroDivisionError, handling_func=print_exception, reraise=False)
+@ExceptionHandler(exception=ZeroDivisionError, handling_func=print_exception, reraise=True)
 def divide_by_zero():
     return 1 / 0  
 
@@ -84,7 +84,7 @@ class SomeOtherException(Exception):
 
 def get_rand_bool():
     """
-    Returns ranfom boolean value
+    Returns random boolean value
     """
     rand_int = random.getrandbits(1)
     return bool(rand_int)
@@ -103,6 +103,7 @@ def do_something():
             raise SomeException
         except SomeException as e:
             print_exception(e)
+            raise
             
     try:
         raise SomeOtherException
@@ -140,7 +141,7 @@ class SomeOtherException(Exception):
 
 def get_rand_bool():
     """
-    Returns ranfom boolean value
+    Returns random boolean value
     """
     rand_int = random.getrandbits(1)
     return bool(rand_int)
@@ -154,7 +155,7 @@ def print_exception(ex):
 
 @ExceptionHandler(exception=(SomeException, SomeOtherException), 
                   handling_func=(print_exception, log_exception), 
-                  reraise=(False,False))
+                  reraise=(True,False))
 def do_something():
     if get_rand_bool():
         raise SomeException
