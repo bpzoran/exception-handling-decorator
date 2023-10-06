@@ -56,10 +56,11 @@ def divide_by_zero():
 
 The final code:
 ```python
+from exception_handler import ExceptionHandler
 def print_exception(ex):
     print(ex)
 
-@ExceptionHandler(exception=ZeroDivisionError, handling_func=print_exception, reraise=True)
+@ExceptionHandler(exception=ZeroDivisionError, handling_func=print_exception, reraise=False)
 def divide_by_zero():
     return 1 / 0  
 
@@ -70,8 +71,17 @@ divide_by_zero()
 The following code raises randomly one of two custom exceptions:
 ```python
 import random
-from exception_handler import ExceptionHandler
 import logging
+
+class SomeException(Exception):
+
+    def __str__(self) -> str:
+        return "SomeException message"
+
+class SomeOtherException(Exception):
+    def __str__(self) -> str:
+        return "SomeOtherException message"
+
 def get_rand_bool():
     """
     Returns ranfom boolean value
@@ -93,7 +103,7 @@ def do_something():
             raise SomeException
         except SomeException as e:
             print_exception(e)
-            raise
+            
     try:
         raise SomeOtherException
     except SomeOtherException as e:
@@ -118,6 +128,16 @@ The final code:
 import random
 from exception_handler import ExceptionHandler
 import logging
+
+class SomeException(Exception):
+
+    def __str__(self) -> str:
+        return "SomeException message"
+
+class SomeOtherException(Exception):
+    def __str__(self) -> str:
+        return "SomeOtherException message"
+
 def get_rand_bool():
     """
     Returns ranfom boolean value
@@ -134,7 +154,7 @@ def print_exception(ex):
 
 @ExceptionHandler(exception=(SomeException, SomeOtherException), 
                   handling_func=(print_exception, log_exception), 
-                  reraise=(True,False))
+                  reraise=(False,False))
 def do_something():
     if get_rand_bool():
         raise SomeException
